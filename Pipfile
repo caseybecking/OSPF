@@ -11,6 +11,8 @@ psycopg2-binary = "*"
 flask-migrate = "*"
 marshmallow = "*"
 flask-restx = "*"
+flask-login = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
