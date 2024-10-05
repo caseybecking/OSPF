@@ -1,8 +1,8 @@
 from flask_login import UserMixin
 from app import db
+from api.base.models import Base
 
-class User(db.Model,UserMixin):
-    id = db.Column(db.Integer,primary_key=True)
+class User(Base, UserMixin):
     email = db.Column(db.String(100),unique=True)
     password = db.Column(db.String(255))
     username = db.Column(db.String(100),unique=True)
@@ -16,12 +16,4 @@ class User(db.Model,UserMixin):
         self.first_name = first_name
         self.last_name = last_name
     
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
     

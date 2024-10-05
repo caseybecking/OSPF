@@ -13,6 +13,12 @@ account_model = g.api.model('Account', {
     'last_name': fields.String(required=True, description='Last Name')
 })
 
+login_model = g.api.model('Login', {
+    'email': fields.String(required=True, description='Email'),
+    'password': fields.String(required=True, description='Password'),
+    'remember': fields.Boolean(description='Remember Me')
+})
+
 @g.api.route('/account/signup')
 class Signup(Resource):
     @g.api.expect(account_model)
@@ -45,6 +51,7 @@ class Signup(Resource):
     
 @g.api.route('/account/login')
 class Login(Resource):
+    @g.api.expect(login_model)
     def post(self):
         data = request.json
         email = data.get('email')

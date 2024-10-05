@@ -4,7 +4,7 @@ import uuid
 class Base(db.Model):
     __abstract__ = True
 
-    id = db.Column(db.String(50), primary_key=True, default=str(uuid.uuid4()))
+    id = db.Column('id', db.Text, default=lambda: str(uuid.uuid4()), primary_key=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
