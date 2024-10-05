@@ -13,7 +13,7 @@
                     <p class="text-muted">Sign in to continue.</p>
                 </div>
                 <div class="p-2 mt-4">
-                    <form method="POST" action="/account/login">
+                    <form id="loginForm" class="needs-validation" novalidate>
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
                         {% for message in messages %}
@@ -59,6 +59,52 @@
                             </div>
                         </div>
                     </form>
+                    <script>
+                        document.getElementById('loginForm').addEventListener('submit', function(event) {
+                            event.preventDefault(); // Prevent the default form submission
+                        
+                            const formData = new FormData(this);
+                            const data = {
+                                email: formData.get('email'),
+                                password: formData.get('password')
+                            };
+                        
+                            fetch('/api/account/login', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    // If the response is OK, parse the JSON
+                                    return response.json();
+                                } else {
+                                    // Handle other response statuses (like 401 unauthorized)
+                                    return response.json().then(err => { throw new Error(err.message); });
+                                }
+                            })
+                            .then(data => {
+                                if (data.redirect) {
+                                    // If login is successful, redirect to the specified page
+                                    window.location.href = data.redirect;
+                                } else if (data.message) {
+                                    // If there's a message, display it
+                                    alert(data.message);
+                                }
+                            })
+                            .catch(error => {
+                                // Show error to the user
+                                const alertDiv = document.createElement('div');
+                                alertDiv.className = 'alert alert-danger mb-4 text-center';
+                                alertDiv.role = 'alert';
+                                alertDiv.innerHTML = `<strong>${error.message}</strong>`;
+                                const form = document.getElementById('loginForm');
+                                form.insertBefore(alertDiv, form.firstChild);
+                            });
+                        });
+                        </script>
                 </div>
             </div>
             <!-- end card body -->

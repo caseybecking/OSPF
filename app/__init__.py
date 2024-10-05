@@ -3,6 +3,8 @@ from app.config import Config
 from app.database import db
 # Flask
 from flask import Flask
+from flask import g
+from flask_restx import Api
 from flask_login import LoginManager
 
 def create_app():
@@ -26,6 +28,17 @@ def create_app():
     from app.user.models import User
 
     with app.app_context():
+        g.api = Api(
+            app,
+            version='0.1',
+            title='Open Source Personal Finance API',
+            description='Open Source Personal Finance API',
+            doc='/api/doc/',
+            prefix='/api'
+        )
+        # API Controllers
+        from api.account.controllers import Signup
+
         db.create_all()
 
     @login_manager.user_loader

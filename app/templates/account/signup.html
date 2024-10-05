@@ -15,7 +15,7 @@
                 <div class="p-2 mt-4">
                     
                    
-                    <form class="needs-validation" novalidate action="/account/signup" method="POST">
+                    <form id="signupForm" class="needs-validation" novalidate>
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
                         {% for message in messages %}
@@ -92,7 +92,46 @@
                             </div>
                         </div>
                     </form>
-
+                    <script>
+                        document.getElementById('signupForm').addEventListener('submit', function(event) {
+                          event.preventDefault(); // Prevent default form submission
+                      
+                          const formData = new FormData(this);
+                          const data = {
+                            email: formData.get('email'),
+                            username: formData.get('username'),
+                            password: formData.get('password'),
+                            first_name: formData.get('first_name'),
+                            last_name: formData.get('last_name')
+                          };
+                      
+                          fetch('/api/account/signup', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                          })
+                          .then(response => {
+                            if (response.ok) {
+                              // Redirect to login page
+                              window.location.href = "/account/login";
+                            } else {
+                              return response.json();
+                            }
+                          })
+                          .then(data => {
+                            if (data && data.message) {
+                              // Display an error message
+                              alert(data.message);
+                            }
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                          });
+                        });
+                      </script>
+                      
                 </div>
             </div>
             <!-- end card body -->
