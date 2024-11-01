@@ -25,7 +25,7 @@ def create_app():
     app.register_blueprint(dashboards)
 
     # Models
-    from app.user.models import User
+    from api.user.models import User
 
     with app.app_context():
         g.api = Api(
@@ -38,13 +38,15 @@ def create_app():
         )
         # API Controllers
         from api.account.controllers import Signup
+        from api.institution.controllers import Institution
+        from api.user.controllers import User as UserAPI
 
         db.create_all()
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(str(user_id))
-    
+
     app.running = True
 
     return app

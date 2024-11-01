@@ -2,8 +2,7 @@ from flask import request, g, jsonify, make_response
 from flask_restx import Resource, fields
 from flask_login import login_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db
-from app.user.models import User
+from api.user.models import User
 
 account_model = g.api.model('Account', {
     'email': fields.String(required=True, description='Email'),
@@ -48,7 +47,7 @@ class Signup(Resource):
         new_user.save()
 
         return make_response(jsonify({'message': 'User created successfully', 'redirect': '/account/login'}), 201)
-    
+
 @g.api.route('/account/login')
 class Login(Resource):
     @g.api.expect(login_model)
@@ -62,8 +61,7 @@ class Login(Resource):
 
         if not user or not check_password_hash(user.password, password):
             return make_response(jsonify({'message': 'Invalid Credentials'}), 400)
-        
+
         login_user(user, remember=remember)
 
         return make_response(jsonify({'message': 'User logged in successfully', 'redirect': '/'}), 200)
-

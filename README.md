@@ -23,10 +23,26 @@ flask run
 
 ## Roadmap and releases
 ### Models
+- Users
+    - Email
+    - Password
+    - Username
+    - First Name
+    - Last Name
 - Institution
+    - User ID
+    - Name
+    - Location
 - Account
-- Transactions
+    - Institution ID
+    - Name
+    - Number
+    - Status
+    - Balance
+
 - Categories
+- Transactions
+- Items (thought here is to be able to track the items that make up the transaction)
 - Merchant
 - Tags
 
