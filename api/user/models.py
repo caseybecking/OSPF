@@ -12,13 +12,6 @@ class User(Base, UserMixin):
     last_name = db.Column(db.String(100))
     api_key = db.Column(db.String(64), unique=True, nullable=True)
 
-    def __init__(self,email,username,password,first_name,last_name):
-        self.email = email
-        self.username = username
-        self.password = password
-        self.first_name = first_name
-        self.last_name = last_name
-
     def __init__(self, email, username, password, first_name, last_name):
         self.email = email
         self.username = username

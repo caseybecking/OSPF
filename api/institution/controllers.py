@@ -31,4 +31,5 @@ class Institution(Resource):
     
     def get(self):
         institutions = InstitutionModel.query.all()
+        print(institutions)
         return make_response(jsonify({'institutions': institutions}), 200)

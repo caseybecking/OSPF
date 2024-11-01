@@ -1,11 +1,13 @@
-# Baseline
-from app.config import Config
-from app.database import db
 # Flask
 from flask import Flask
 from flask import g
+# Flask Restx
+from flask_restx import Namespace
 from flask_restx import Api
 from flask_login import LoginManager
+# Baseline
+from app.config import Config
+from app.database import db
 
 def create_app():
     app = Flask(__name__)

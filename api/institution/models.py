@@ -17,7 +17,7 @@ class InstitutionModel(Base):
 
     def __repr__(self):
         return '<Institution %r>' % self.name
-    
+
     def save(self):
         db.session.add(self)
         db.session.commit()

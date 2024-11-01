@@ -7,9 +7,8 @@ user_model = g.api.model('User', {
     'username': fields.String(required=True, description='Username'),
     'password': fields.String(required=True, description='Password'),
     'first_name': fields.String(required=True, description='First Name'),
-    'last_name': fields.String(required=True, description='Last Name'),
-    'api_key': fields.String(description='API Key')
-})
+    'last_name': fields.String(required=True, description='Last Name')
+    })
 
 @g.api.route('/user')
 class User(Resource):
@@ -43,4 +42,5 @@ class User(Resource):
 
     def get(self):
         users = _user_model.query.all()
-        return make_response(jsonify({'users': users}), 200)\
+        return make_response(jsonify({'users': users}), 200)
+
