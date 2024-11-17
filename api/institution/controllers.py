@@ -31,6 +31,5 @@ class Institution(Resource):
 
     def get(self):
         institutions = InstitutionModel.query.all()
-        _isntitutions = []
-        _isntitutions.append([institution.to_dict() for institution in institutions])
+        _isntitutions = [institution.to_dict() for institution in institutions]
         return make_response(jsonify({'institutions': _isntitutions}), 200)

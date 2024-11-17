@@ -22,7 +22,7 @@ flask run
 ### Plugins
 
 ## Roadmap and releases
-### Models
+### Required Models
 - Users
     - Email
     - Password
@@ -58,6 +58,7 @@ flask run
     - Amount
     - Transaction Type
 
+### Nice to haves
 - Items (thought here is to be able to track the items that make up the transaction)
 - Merchant
 - Tags

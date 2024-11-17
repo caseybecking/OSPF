@@ -37,6 +37,5 @@ class InstitutionAccount(Resource):
 
     def get(self):
         accounts = InstitutionAccountModel.query.all()
-        _accounts = []
-        _accounts.append([account.to_dict() for account in accounts])
+        _accounts = [account.to_dict() for account in accounts]
         return make_response(jsonify({'accounts': _accounts}), 200)

@@ -20,6 +20,20 @@ class User(Base, UserMixin):
         self.last_name = last_name
         self.api_key = None  # Initialize without an API key
 
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'username': self.username,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
     def generate_api_key(self):
         """Generate a new unique API key and save it to the database."""
         self.api_key = secrets.token_hex(32)  # Generate a 64-character API key

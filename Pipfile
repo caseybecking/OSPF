@@ -14,6 +14,7 @@ flask-restx = "*"
 flask-login = "*"
 python-dotenv = "*"
 pylint = "*"
+requests = "*"
 
 [dev-packages]
 

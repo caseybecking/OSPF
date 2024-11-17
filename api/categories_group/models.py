@@ -12,7 +12,7 @@ class CategoriesGroupModel(Base):
 
     def __repr__(self):
         return '<CategoriesGroup %r>' % self.name
-    
+
     def to_dict(self):
         return {
             'id': self.id,
