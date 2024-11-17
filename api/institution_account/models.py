@@ -4,6 +4,7 @@ from api.base.models import Base
 class InstitutionAccountModel(Base):
     __tablename__ = 'account'
     institution_id = db.Column('institution_id', db.Text, db.ForeignKey('institution.id'), nullable=False)
+    institution = db.relationship('InstitutionModel', backref='account')
     user_id = db.Column('user_id', db.Text, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     number = db.Column(db.String(255), nullable=False)
@@ -25,6 +26,7 @@ class InstitutionAccountModel(Base):
         return {
             'id': self.id,
             'institution_id': self.institution_id,
+            'institution': self.institution.to_dict(),
             'user_id': self.user_id,
             'name': self.name,
             'number': self.number,
