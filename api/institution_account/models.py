@@ -8,7 +8,7 @@ class InstitutionAccountModel(Base):
     user_id = db.Column('user_id', db.Text, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     number = db.Column(db.String(255), nullable=False)
-    status = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.Enum('active', 'inactive',name='status_enum'), nullable=False)
     balance = db.Column(db.Float, nullable=False)
 
     def __init__(self, institution_id, user_id, name, number, status, balance):

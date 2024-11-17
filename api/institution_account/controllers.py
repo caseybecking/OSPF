@@ -7,7 +7,7 @@ institution_account_model = g.api.model('InstitutionAccount', {
     'user_id': fields.String(required=True, description='User ID'),
     'name': fields.String(required=True, description='Account Name'),
     'number': fields.String(required=True, description='Account Number'),
-    'status': fields.String(required=True, description='Account Status'),
+    'status': fields.String(enum=['active', 'inactive'], required=True, description='Account Status'),
     'balance': fields.Float(required=True, description='Account Balance')
 })
 
