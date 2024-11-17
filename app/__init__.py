@@ -25,6 +25,10 @@ def create_app():
     app.register_blueprint(account_blueprint)
     from app.dashboard.controllers import dashboards
     app.register_blueprint(dashboards)
+    from app.institution.controllers import institution_blueprint
+    app.register_blueprint(institution_blueprint)
+    from app.institution_account.controllers import institution_account_blueprint
+    app.register_blueprint(institution_account_blueprint)
 
     # Models
     from api.user.models import User
@@ -42,6 +46,11 @@ def create_app():
         from api.account.controllers import Signup
         from api.institution.controllers import Institution
         from api.user.controllers import User as UserAPI
+        from api.institution_account.controllers import InstitutionAccount
+        from api.categories_group.controllers import CategoriesGroup
+        from api.categories_type.controllers import CategoriesType
+        from api.categories.controllers import Categories
+        from api.transaction.controllers import Transaction
 
         db.create_all()
 

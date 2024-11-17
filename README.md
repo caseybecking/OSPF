@@ -35,13 +35,29 @@ flask run
     - Location
 - Account
     - Institution ID
+    - User ID
     - Name
     - Number
     - Status
     - Balance
-
+- Categories Group
+    - User ID
+    - Name
+- Categories Type
+    - User ID
+    - Name (Income, Expense, Transfer)
 - Categories
+    - User ID
+    - Categories Group ID
+    - Categories Type ID
+    - Name
 - Transactions
+    - User ID
+    - Categories ID
+    - Account ID
+    - Amount
+    - Transaction Type
+
 - Items (thought here is to be able to track the items that make up the transaction)
 - Merchant
 - Tags

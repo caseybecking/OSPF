@@ -58,7 +58,7 @@
                     <div id="two-column-menu">
                     </div>
                     <ul class="navbar-nav" id="navbar-nav">
-                        <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-Institution">Institution</span></li>
+                        <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-Menu">Menu</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarInstitution" data-bs-toggle="collapse" role="button"
                                 aria-expanded="false" aria-controls="sidebarInstitution">
@@ -73,10 +73,7 @@
                                         <div class="collapse menu-dropdown" id="sidebarInstitutions">
                                             <ul class="nav nav-sm flex-column">
                                                 <li class="nav-item">
-                                                    <a href="/institution" class="nav-link" data-key="t-basic"> Add Institution </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="/institution/nomadic_users" class="nav-link" data-key="t-basic"> Nomadic User Sync </a>
+                                                    <a href="/institution" class="nav-link" data-key="t-basic"> Institutions </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -84,6 +81,29 @@
                                 </ul>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarAccount" data-bs-toggle="collapse" role="button"
+                                aria-expanded="false" aria-controls="sidebarAccount">
+                                <i class="ri-globe-line"></i> <span data-key="t-authentication">Account</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarAccount">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="#sidebarAccounts" class="nav-link" data-bs-toggle="collapse" role="button"
+                                            aria-expanded="false" aria-controls="sidebarAccount" data-key="t-signin"> Account
+                                        </a>
+                                        <div class="collapse menu-dropdown" id="sidebarAccounts">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a href="/account" class="nav-link" data-key="t-basic"> Accounts </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
                     </ul>
                 </div>
                 <!-- Sidebar -->

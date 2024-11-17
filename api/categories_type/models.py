@@ -1,30 +1,24 @@
 from app import db
 from api.base.models import Base
 
-class InstitutionModel(Base):
-    __tablename__ = 'institution'
+
+class CategoriesTypeModel(Base):
+    __tablename__ = 'categories_type'
     user_id = db.Column('user_id', db.Text, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(255), nullable=False)
-    location = db.Column(db.String(255), nullable=True)
-    description = db.Column(db.Text, nullable=True)
 
-
-    def __init__(self, user_id, name, location, description):
+    def __init__(self, user_id, name):
         self.user_id = user_id
         self.name = name
-        self.location = location
-        self.description = description
 
     def __repr__(self):
-        return '<Institution %r>' % self.name
-
+        return '<CategoriesType %r>' % self.name
+    
     def to_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
             'name': self.name,
-            'location': self.location,
-            'description': self.description,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
@@ -36,4 +30,3 @@ class InstitutionModel(Base):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-    

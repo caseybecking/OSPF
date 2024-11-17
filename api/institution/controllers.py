@@ -28,8 +28,9 @@ class Institution(Resource):
         new_institution.save()
 
         return make_response(jsonify({'message': 'Institution created successfully'}), 201)
-    
+
     def get(self):
         institutions = InstitutionModel.query.all()
-        print(institutions)
-        return make_response(jsonify({'institutions': institutions}), 200)
+        _isntitutions = []
+        _isntitutions.append([institution.to_dict() for institution in institutions])
+        return make_response(jsonify({'institutions': _isntitutions}), 200)
