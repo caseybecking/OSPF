@@ -172,7 +172,7 @@ class TransactionCSVImport(Resource):
         account = InstitutionAccountModel.query.filter_by(name=account_name,user_id=user_id).first()
         if not account:
             print(f"InstitutionAccountModel '{account_name}' does not exist. Creating...")
-            account = InstitutionAccountModel(name=account_name, institution_id=institution_id, user_id=user_id, number="Unknown", status='active', balance=0)
+            account = InstitutionAccountModel(name=account_name, institution_id=institution_id, user_id=user_id, number="Unknown", status='active', balance=0, starting_balance=0,account_type='other',account_class='asset')
             db.session.add(account)
             db.session.commit()
         return account.id

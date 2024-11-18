@@ -21,3 +21,18 @@ def transactions():
     _transactions = requests.get(api_url, timeout=15).json().get('transactions', [])
     user_id = session.get('_user_id')
     return render_template('transactions/index.html', transactions=_transactions, user_id=user_id)
+
+@transactions_blueprint.route('/transactions/import')
+@login_required
+def import_transactions():
+    """
+    Render the import transactions page.
+
+    This view function renders the transactions/import.html template with the user ID
+    from the session.
+
+    Returns:
+        str: Rendered HTML template for the import transactions page.
+    """
+    user_id = session.get('_user_id')
+    return render_template('transactions/import.html', user_id=user_id)

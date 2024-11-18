@@ -24,3 +24,4 @@ def institution_account():
     _istitutions = requests.get(url_for('institution', _external=True), timeout=15).json().get('institutions', [])
 
     return render_template('institution_account/index.html', accounts=accounts, user_id=user_id, institutions=_istitutions)
+

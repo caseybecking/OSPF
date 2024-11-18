@@ -1,0 +1,91 @@
+{% extends "partials/base.html" %}
+{% block title %}Import Transactions{% endblock title %}
+{% block extra_css %}
+    <!-- dropzone css -->
+    <link rel="stylesheet" href="{{url_for('static' ,filename='libs/dropzone/dist/dropzone.css')}}" type="text/css" />
+    <!-- Filepond css -->
+    <link rel="stylesheet" href="{{url_for('static' ,filename='libs/filepond/dist/filepond.min.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{url_for('static' ,filename='libs/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css')}}">
+{% endblock extra_css %}
+{% block content %}
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Multiple File Upload</h4>
+                    </div><!-- end card header -->
+
+                    <div class="card-body">
+                        <div class="dropzone">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple="multiple">
+                            </div>
+                            <div class="dz-message needsclick">
+                                <div class="mb-3">
+                                    <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                                </div>
+
+                                <h4>Drop files here or click to upload.</h4>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled mb-0" id="dropzone-preview">
+                            <li class="mt-2" id="dropzone-preview-list">
+                                <!-- This is used as the file preview template -->
+                                <div class="border rounded">
+                                    <div class="d-flex p-2">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="avatar-sm bg-light rounded">
+                                                <img data-dz-thumbnail class="img-fluid rounded d-block" src="{{url_for('static' ,filename='images/new-document.png')}}" alt="Dropzone-Image" />
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="pt-1">
+                                                <h5 class="fs-14 mb-1" data-dz-name>&nbsp;</h5>
+                                                <p class="fs-13 text-muted mb-0" data-dz-size></p>
+                                                <strong class="error text-danger" data-dz-errormessage></strong>
+                                            </div>
+                                        </div>
+                                        <div class="flex-shrink-0 ms-3">
+                                            <button data-dz-remove class="btn btn-sm btn-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <button id="upload-button" class="btn btn-primary mt-3">Upload</button>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end col -->
+</div>
+</div>
+<!-- container-fluid -->
+</div>
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock footer %}
+</div>
+<!-- end main content-->
+{% endblock content %}
+{% block extra_js %}
+<!-- dropzone min -->
+<script src="{{url_for('static' ,filename='libs/dropzone/dist/dropzone-min.js')}}"></script>
+<!-- filepond js -->
+<script src="{{url_for('static' ,filename='libs/filepond/dist/filepond.min.js')}}"></script>
+<script src="{{url_for('static' ,filename='libs/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js')}}"></script>
+<script src="{{url_for('static' ,filename='libs/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js')}}"></script>
+<script src="{{url_for('static' ,filename='libs/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js')}}"></script>
+<script src="{{url_for('static' ,filename='libs/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/transactions/transactions.js') }}"></script>
+{% endblock extra_js %}
