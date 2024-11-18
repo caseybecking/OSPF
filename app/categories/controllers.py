@@ -18,10 +18,12 @@ def categories():
         str: Rendered HTML template for the categories page.
     """
     api_url = url_for('categories', _external=True)
+    _categories_group = requests.get(url_for('categories_group', _external=True),timeout=15).json().get('categories_group', [])
+    _categories_type = requests.get(url_for('categories_type', _external=True), timeout=15).json().get('categories_type', [])
     response = requests.get(api_url, timeout=15)
     _categories = response.json().get('categories', [])
     user_id = session.get('_user_id')
-    return render_template('categories/index.html', categories=_categories, user_id=user_id)
+    return render_template('categories/index.html', categories=_categories, user_id=user_id, categories_group=_categories_group, categories_type=_categories_type)
 
 @categories_blueprint.route('/categories/group')
 @login_required

@@ -17,6 +17,8 @@ class CategoriesModel(Base):
     name = db.Column(db.String(255), nullable=False)
     categories_group_id = db.Column('categories_group_id', db.Text, db.ForeignKey('categories_group.id'), nullable=False)
     categories_type_id = db.Column('categories_type_id', db.Text, db.ForeignKey('categories_type.id'), nullable=False)
+    categories_group = db.relationship('CategoriesGroupModel', backref='categories')
+    categories_type = db.relationship('CategoriesTypeModel', backref='categories')
 
     def __init__(self, user_id, categories_group_id, categories_type_id, name):
         """
@@ -54,6 +56,8 @@ class CategoriesModel(Base):
             'user_id': self.user_id,
             'categories_group_id': self.categories_group_id,
             'categories_type_id': self.categories_type_id,
+            'categories_group': self.categories_group.to_dict(),
+            'categories_type': self.categories_type.to_dict(),
             'name': self.name,
             'created_at': self.created_at,
             'updated_at': self.updated_at
