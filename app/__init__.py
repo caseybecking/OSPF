@@ -1,12 +1,15 @@
-# CSV
-import csv
+# Datetime
+from datetime import datetime
 # Flask
+import babel.dates
 from flask import Flask
 from flask import g
 # Flask Restx
 from flask_restx import Namespace
 from flask_restx import Api
 from flask_login import LoginManager
+# babel
+import babel
 # Baseline
 from app.config import Config
 from app.database import db
@@ -34,6 +37,8 @@ def create_app():
     app.register_blueprint(institution_account_blueprint)
     from app.categories.controllers import categories_blueprint
     app.register_blueprint(categories_blueprint)
+    from app.transactions.controllers import transactions_blueprint
+    app.register_blueprint(transactions_blueprint)
 
     # Models
     from api.user.models import User
@@ -70,5 +75,17 @@ def create_app():
         return User.query.get(str(user_id))
 
     app.running = True
+
+
+    @app.template_filter()
+    def format_datetime(value, _format='medium'):
+        _value = datetime.strptime(value, '%a, %d %b %Y %H:%M:%S %Z')
+        if _format == 'full':
+            _format="EEEE, d. MMMM y 'at' HH:mm"
+        elif _format == 'medium':
+            _format="EE dd.MM.y HH:mm"
+        elif _format == 'short':
+            _format="MM/dd/YYYY"
+        return babel.dates.format_datetime(_value, _format)
 
     return app

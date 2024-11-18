@@ -57,6 +57,8 @@ flask run
     - Account ID
     - Amount
     - Transaction Type
+    - External ID 
+    - Description
 
 ### Nice to haves
 - Items (thought here is to be able to track the items that make up the transaction)

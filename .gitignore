@@ -263,3 +263,4 @@ app/config.py
 
 Pipfile.lock
 database.erd
+uploads/*
