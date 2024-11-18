@@ -31,6 +31,5 @@ class Categories(Resource):
 
     def get(self):
         categories = CategoriesModel.query.all()
-        _categories = []
-        _categories.append([category.to_dict() for category in categories])
+        _categories = [category.to_dict() for category in categories]
         return make_response(jsonify({'categories': _categories}), 200)

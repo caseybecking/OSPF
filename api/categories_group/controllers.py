@@ -25,6 +25,5 @@ class CategoriesGroup(Resource):
 
     def get(self):
         categories_group = CategoriesGroupModel.query.all()
-        _categories_group = []
-        _categories_group.append([category_group.to_dict() for category_group in categories_group])
+        _categories_group = [category_group.to_dict() for category_group in categories_group]
         return make_response(jsonify({'categories_group': _categories_group}), 200)

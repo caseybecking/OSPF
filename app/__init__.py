@@ -29,6 +29,8 @@ def create_app():
     app.register_blueprint(institution_blueprint)
     from app.institution_account.controllers import institution_account_blueprint
     app.register_blueprint(institution_account_blueprint)
+    from app.categories.controllers import categories_blueprint
+    app.register_blueprint(categories_blueprint)
 
     # Models
     from api.user.models import User

@@ -25,6 +25,5 @@ class CategoriesType(Resource):
 
     def get(self):
         categories_type = CategoriesTypeModel.query.all()
-        _categories_type = []
-        _categories_type.append([category_type.to_dict() for category_type in categories_type])
+        _categories_type = [category_type.to_dict() for category_type in categories_type]
         return make_response(jsonify({'categories_type': _categories_type}), 200)
