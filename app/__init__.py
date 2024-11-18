@@ -8,6 +8,8 @@ from flask_login import LoginManager
 # Baseline
 from app.config import Config
 from app.database import db
+# CSV
+import csv
 
 def create_app():
     app = Flask(__name__)
@@ -53,6 +55,13 @@ def create_app():
         from api.categories_type.controllers import CategoriesType
         from api.categories.controllers import Categories
         from api.transaction.controllers import Transaction
+
+        #CLI
+        from app.cli import insert_categories
+        @app.cli.command('insert-categories')    
+        def insert_cat():
+            insert_categories()
+            
 
         db.create_all()
 

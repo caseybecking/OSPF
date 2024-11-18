@@ -1,0 +1,131 @@
+categories,categories_group,categories_type
+Salary,Income,Income
+Bonus,Income,Income
+Dividend Income,Income,Income
+Interest Income,Income,Income
+Auto Insurance,Auto & Transportation,Expense
+Auto Payment,Auto & Transportation,Expense
+Gas & Fuel,Auto & Transportation,Expense
+Parking,Auto & Transportation,Expense
+Public Transportation,Auto & Transportation,Expense
+Service & Parts,Auto & Transportation,Expense
+Auto Registration,Auto & Transportation,Expense
+Quads,Auto & Transportation,Expense
+Tolls,Auto & Transportation,Expense
+RV Payment,Auto & Transportation,Expense
+ATV Insurance,Auto & Transportation,Expense
+Gardener,Bills & Utilities,Expense
+Landscape,Bills & Utilities,Expense
+Home Phone,Bills & Utilities,Expense
+Internet,Bills & Utilities,Expense
+Mobile Phone,Bills & Utilities,Expense
+Television,Bills & Utilities,Expense
+Utilities,Bills & Utilities,Expense
+Electric,Bills & Utilities,Expense
+Gas,Bills & Utilities,Expense
+Water and Trash,Bills & Utilities,Expense
+Pool,Bills & Utilities,Expense
+RV Insurance,Auto & Transportation,Expense
+Advertising,Business Services,Expense
+Legal,Business Services,Expense
+Office Supplies,Business Services,Expense
+Printing,Business Services,Expense
+Shipping,Business Services,Expense
+AWS Hosting,Business Services,Expense
+UTV Payment,Auto & Transport,Expense
+Books & Supplies,Education,Expense
+Student Loan,Education,Expense
+Tuition,Education,Expense
+Coaching,Education,Expense
+ATV Upgrads,Auto & Transportation,Expense
+Amusement,Entertainment,Expense
+Arts,Entertainment,Expense
+Movies & DVDs (AppleTV),Entertainment,Expense
+Music (Spotify),Entertainment,Expense
+Newspapers & Magazines,Entertainment,Expense
+Streaming (Netflix/Hulu/Twitch),Entertainment,Expense
+Subscriptions,Entertainment,Expense
+ATM Fee,Fees & Charges,Expense
+Credit Union Fee,Fees & Charges,Expense
+Finance Charge,Fees & Charges,Expense
+Late Fee,Fees & Charges,Expense
+Service Fee,Fees & Charges,Expense
+Trade Commissions,Fees & Charges,Expense
+Drinking Water,Food & Dining,Expense
+Financial Advisor,Financial,Expense
+Life Insurance,Financial,Expense
+Retirement,Financial,Expense
+Alcohol & Bars,Food & Dining,Expense
+Coffee Shops,Food & Dining,Expense
+Fast Food,Food & Dining,Expense
+Groceries,Food & Dining,Expense
+Restaurants,Food & Dining,Expense
+Monster,Food & Dining,Expense
+Charity,Gifts & Donations,Expense
+Gift,Gifts & Donations,Expense
+Dentist,Health & Fitness,Expense
+Doctor,Health & Fitness,Expense
+Eyecare,Health & Fitness,Expense
+Gym,Health & Fitness,Expense
+Health Insurance,Health & Fitness,Expense
+Pharmacy,Health & Fitness,Expense
+Sports,Health & Fitness,Expense
+Personal Care,Health & Fitness,Expense
+Furnishings,Home,Expense
+Home Improvement,Home,Expense
+Home Insurance,Home,Expense
+Home Services,Home,Expense
+Home Supplies,Home,Expense
+Lawn & Garden,Home,Expense
+Mortgage & Rent,Home,Expense
+Allowance,Kids,Expense
+Baby Supplies,Kids,Expense
+Babysitter & Daycare,Kids,Expense
+Child Support,Kids,Expense
+Kids Activities,Kids,Expense
+Toys,Kids,Expense
+Kids Clothing,Kids,Expense
+Hair,Personal Care,Expense
+Laundry,Personal Care,Expense
+Nail Salon,Personal Care,Expense
+Spa & Massage,Personal Care,Expense
+Tattoo,Personal Care,Expense
+Pet Food & Supplies,Pets,Expense
+Pet Grooming,Pets,Expense
+Veterinary,Pets,Expense
+Pet Insurance,Pets,Expense
+Adult Clothing,Personal Care,Expense
+Electronics & Software,Personal Care,Expense
+Hobbies,Personal Care,Expense
+Sporting Goods,Personal Care,Expense
+Federal Tax,Taxes,Expense
+Local Tax,Taxes,Expense
+Property Tax,Taxes,Expense
+Sales Tax,Taxes,Expense
+State Tax,Taxes,Expense
+Credit Card Payment,Transfer,Transfer
+Transfer for Cash Spending,Transfer,Transfer
+Transfer to Savings,Transfer,Transfer
+Transfer,Transfer,Transfer
+Air Travel,Travel,Expense
+Car Rental & Taxi,Travel,Expense
+Hotel,Travel,Expense
+Vacation,Travel,Expense
+Camping,Travel,Expense
+Passports,Travel,Expense
+Jocelyn DC Trip,Travel,Expense
+Cash & ATM,Uncategorized,Transfer
+Check,Uncategorized,Transfer
+Vehicle Sales,Auto & Transportation,Expense
+Drivers Licence,Auto & Transportation,Expense
+Donation,Gifts & Donations,Expense
+Tools,Home,Expense
+Home Escrow,Home,Expense
+RV Supplies,Auto & Transportation,Expense
+Vehicle Interest,Auto & Transportation,Expense
+Home Interest,Home,Expense
+Books,Education,Expense
+ADU,Home,Expense
+Photos,Home,Expense
+Education,Personal Care, Expense
+Assistant,Home,Expense
