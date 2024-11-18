@@ -1,7 +1,7 @@
+import secrets
 from flask_login import UserMixin
 from app import db
 from api.base.models import Base
-import secrets
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
@@ -21,7 +21,7 @@ class User(Base, UserMixin):
         self.api_key = None  # Initialize without an API key
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return f'<User {self.username!r}>'
 
     def to_dict(self):
         return {
@@ -38,6 +38,3 @@ class User(Base, UserMixin):
         """Generate a new unique API key and save it to the database."""
         self.api_key = secrets.token_hex(32)  # Generate a 64-character API key
         db.session.commit()  # Save the new key to the database
-
-    
-    

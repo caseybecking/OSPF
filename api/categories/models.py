@@ -42,7 +42,7 @@ class CategoriesModel(Base):
         Returns:
             str: String representation of the category.
         """
-        return '<Categories %r>' % self.name
+        return f'<Categories {self.name!r}>'
 
     def to_dict(self):
         """

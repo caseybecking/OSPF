@@ -1,8 +1,8 @@
+# CSV
+import csv
 # APP
 from app import db
 from app.config import Config
-# CSV
-import csv
 # MODELS
 from api.categories_type.models import CategoriesTypeModel as CategoriesType
 from api.categories_group.models import CategoriesGroupModel as CategoriesGroup
@@ -12,7 +12,7 @@ def insert_categories():
     user_id = Config.DEFAULT_USER_ID
     categories_type = []
     categories_group = []
-    with open("data/categories_data.csv", "r") as f_in:
+    with open("data/categories_data.csv", "r", encoding=str) as f_in:
         reader = csv.reader(f_in, quotechar="'")
         next(reader)  # skip header
         ## categories_type
@@ -35,8 +35,8 @@ def insert_categories():
             cat = CategoriesGroup(name=category_group, user_id=user_id)
             db.session.add(cat)
             db.session.commit()
-    
-    with open("data/categories_data.csv", "r") as f_in:
+
+    with open("data/categories_data.csv", "r", encoding=str) as f_in:
         reader = csv.reader(f_in, quotechar="'")
         next(reader)  # skip header
         ## categories_type

@@ -7,7 +7,8 @@ transaction_model = g.api.model('Transaction', {
     'categories_id': fields.String(required=True, description='Categories ID'),
     'account_id': fields.String(required=True, description='Account ID'),
     'amount': fields.Float(required=True, description='Amount'),
-    'transaction_type': fields.String(required=True, description='Transaction Type')
+    'transaction_type': fields.String(required=True, description='Transaction Type'),
+    'external_id': fields.String(description='External ID')
 })
 
 @g.api.route('/transaction')
@@ -20,13 +21,15 @@ class Transaction(Resource):
         account_id = data.get('account_id')
         amount = data.get('amount')
         transaction_type = data.get('transaction_type')
+        external_id = data.get('external_id')
 
         new_transaction = TransactionModel(
             user_id=user_id,
             categories_id=categories_id,
             account_id=account_id,
             amount=amount,
-            transaction_type=transaction_type
+            transaction_type=transaction_type,
+            external_id=external_id
         )
         new_transaction.save()
 

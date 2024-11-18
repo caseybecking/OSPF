@@ -20,8 +20,30 @@ login_model = g.api.model('Login', {
 
 @g.api.route('/account/signup')
 class Signup(Resource):
+    """
+    Signup Resource for creating a new user account.
+
+    This resource handles the POST request to create a new user account. It expects
+    a JSON payload with the user's email, username, password, first name, and last name.
+    It checks if the email or username already exists in the database and returns an error
+    message if they do. Otherwise, it creates a new user with the provided details.
+
+    Methods:
+        post: Handle POST requests to create a new user account.
+    """
     @g.api.expect(account_model)
     def post(self):
+        """
+        Handle POST requests to create a new user account.
+
+        This method extracts the user details from the request JSON payload, checks if the
+        email or username already exists in the database, and returns an error message if they do.
+        If the email and username are unique, it creates a new user with the provided details
+        and hashes the password using the scrypt method.
+
+        Returns:
+            Response: JSON response with a success or error message.
+        """
         data = request.json
         email = data.get('email')
         username = data.get('username')

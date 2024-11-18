@@ -44,4 +44,3 @@ class User(Resource):
         users = _user_model.query.all()
         users = [user.to_dict() for user in users]
         return make_response(jsonify({'users': users}), 200)
-

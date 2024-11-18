@@ -11,7 +11,7 @@ class CategoriesGroupModel(Base):
         self.name = name
 
     def __repr__(self):
-        return '<CategoriesGroup %r>' % self.name
+        return f'<CategoriesGroup {self.name!r}>'
 
     def to_dict(self):
         return {

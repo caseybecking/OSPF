@@ -20,8 +20,8 @@ class InstitutionAccountModel(Base):
         self.balance = balance
 
     def __repr__(self):
-        return '<Account %r>' % self.name
-    
+        return f'<Account {self.name!r}>'
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -43,5 +43,3 @@ class InstitutionAccountModel(Base):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-
-

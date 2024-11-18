@@ -8,7 +8,7 @@ institution_blueprint = Blueprint('institution', __name__)
 @login_required
 def institution():
     api_url = url_for('institution', _external=True)
-    response = requests.get(api_url)
+    response = requests.get(api_url, timeout=15)
     institutions = response.json().get('institutions', [])
     user_id = session.get('_user_id')
 

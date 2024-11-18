@@ -16,7 +16,7 @@ class InstitutionModel(Base):
         self.description = description
 
     def __repr__(self):
-        return '<Institution %r>' % self.name
+        return f'<Institution {self.name!r}>'
 
     def to_dict(self):
         return {

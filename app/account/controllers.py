@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for
 from flask_login import logout_user, login_required
 
 account_blueprint = Blueprint('account', __name__)
 
-@account_blueprint.route('/account/signup')  
-def signup(): 
+@account_blueprint.route('/account/signup')
+def signup():
     return render_template('account/signup.html')
 
 @account_blueprint.route('/account/login')
