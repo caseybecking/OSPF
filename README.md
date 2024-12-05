@@ -1,5 +1,7 @@
 # OSPF - Open Source Personal Financial
-## The goal of this will be to be  a professional grade personal finaince application, free and open-source.
+## The goal of this project is to develop a professional-grade personal finance application that is both free and open-source, designed to empower individuals with the tools they need to manage their finances effectively. The application will provide robust features comparable to commercial software, such as budgeting, expense tracking, financial planning, and investment analysis, while prioritizing user privacy and data security.
+
+## As an open-source project, it will be community-driven, encouraging contributions from developers and users worldwide to continually improve and expand its capabilities. By offering a cost-free solution, the application aims to make high-quality financial management accessible to everyone, regardless of their financial circumstances. The ultimate objective is to help users gain better control over their financial lives, achieve their financial goals, and make informed decisions through a user-friendly, transparent, and secure platform.
 
 
 ### Versions
