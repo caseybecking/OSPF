@@ -153,7 +153,12 @@
                                                 <td>{{ category.categories_group.name }}</td>
                                                 <td>{{ category.categories_type.name }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-light">Details</button>
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="editCategory('{{ category.id }}')">
+                                                        <i class="ri-edit-line"></i> Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteCategory('{{ category.id }}')">
+                                                        <i class="ri-delete-bin-line"></i> Delete
+                                                    </button>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -163,6 +168,61 @@
                             </div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="EditCategoryModal" tabindex="-1" aria-labelledby="EditCategoryModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="EditCategoryModalLabel">Edit Category</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" onsubmit="updateCategory(event)">
+                                        <input type="hidden" id="edit_category_id">
+                                        <input type="hidden" id="edit_category_user_id" value="{{ user_id }}">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_categoriesName" class="form-label">Category Name</label>
+                                                    <input type="text" class="form-control" id="edit_categoriesName" placeholder="Enter Category Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_categoriesGroupId" class="form-label">Group Name</label>
+                                                    <select class="form-select" id="edit_categoriesGroupId">
+                                                        <option value="">Choose...</option>
+                                                        {% for group in categories_group %}
+                                                        <option value="{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_categoriesTypeId" class="form-label">Type Name</label>
+                                                    <select class="form-select" id="edit_categoriesTypeId">
+                                                        <option value="">Choose...</option>
+                                                        {% for type in categories_type %}
+                                                        <option value="{{ type.id }}">{{ type.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- end col -->
             </div><!-- end row -->
 

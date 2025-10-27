@@ -193,3 +193,69 @@ class CategoriesCSVImport(Resource):
             return make_response(jsonify({
                 'message': f'Error processing CSV: {str(e)}'
             }), 500)
+
+
+@g.api.route('/categories/<string:id>')
+class CategoriesDetail(Resource):
+    def get(self, id):
+        """Get a single category by ID"""
+        category = CategoriesModel.query.get(id)
+        if not category:
+            return make_response(jsonify({'message': 'Category not found'}), 404)
+
+        return make_response(jsonify({'category': category.to_dict()}), 200)
+
+    @g.api.expect(categories_model)
+    def put(self, id):
+        """Update a category"""
+        category = CategoriesModel.query.get(id)
+        if not category:
+            return make_response(jsonify({'message': 'Category not found'}), 404)
+
+        data = request.json
+
+        # Validate foreign keys if provided
+        if 'categories_group_id' in data:
+            group = CategoriesGroupModel.query.get(data['categories_group_id'])
+            if not group:
+                return make_response(jsonify({
+                    'message': 'Invalid categories_group_id'
+                }), 400)
+
+        if 'categories_type_id' in data:
+            cat_type = CategoriesTypeModel.query.get(data['categories_type_id'])
+            if not cat_type:
+                return make_response(jsonify({
+                    'message': 'Invalid categories_type_id'
+                }), 400)
+
+        # Update fields if provided
+        if 'name' in data:
+            category.name = data['name']
+        if 'categories_group_id' in data:
+            category.categories_group_id = data['categories_group_id']
+        if 'categories_type_id' in data:
+            category.categories_type_id = data['categories_type_id']
+
+        category.save()
+
+        return make_response(jsonify({'message': 'Category updated successfully', 'category': category.to_dict()}), 200)
+
+    def delete(self, id):
+        """Delete a category"""
+        from api.transaction.models import TransactionModel
+
+        category = CategoriesModel.query.get(id)
+        if not category:
+            return make_response(jsonify({'message': 'Category not found'}), 404)
+
+        # Check if there are any transactions linked to this category
+        linked_transactions = TransactionModel.query.filter_by(categories_id=id).count()
+        if linked_transactions > 0:
+            return make_response(jsonify({
+                'message': f'Cannot delete category. There are {linked_transactions} transaction(s) linked to it. Please delete or reassign the transactions first.'
+            }), 400)
+
+        category.delete()
+
+        return make_response(jsonify({'message': 'Category deleted successfully'}), 200)

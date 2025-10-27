@@ -135,7 +135,12 @@
                                                 <td>{{ institution.description }}</td>
                                                 <td>{{ institution.updated_at }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-light">Details</button>
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="editInstitution('{{ institution.id }}')">
+                                                        <i class="ri-edit-line"></i> Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteInstitution('{{ institution.id }}')">
+                                                        <i class="ri-delete-bin-line"></i> Delete
+                                                    </button>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -145,6 +150,47 @@
                             </div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="EditInstitutionModal" tabindex="-1" aria-labelledby="EditInstitutionModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="EditInstitutionModalLabel">Edit Institution</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" onsubmit="updateInstitution(event)">
+                                        <input type="hidden" id="edit_institution_id">
+                                        <input type="hidden" id="edit_user_id" value="{{ user_id }}">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_institutionName" class="form-label">Institution Name</label>
+                                                    <input type="text" class="form-control" id="edit_institutionName" placeholder="Enter Institution Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <label for="edit_institutionLocation" class="form-label">Institution Location</label>
+                                                <input type="text" class="form-control" id="edit_institutionLocation" placeholder="Enter Institution Location">
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <label for="edit_institutionDescription" class="form-label">Institution Description</label>
+                                                <textarea class="form-control" id="edit_institutionDescription" rows="3" placeholder="Enter Institution Description"></textarea>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- end col -->
             </div><!-- end row -->
 

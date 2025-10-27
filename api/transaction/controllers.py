@@ -362,3 +362,77 @@ class TransactionCSVImport(Resource):
         db.session.add(transaction)
         db.session.commit()
         print(f"Transaction {external_id} created successfully.")
+
+
+@g.api.route('/transaction/<string:id>')
+class TransactionDetail(Resource):
+    def get(self, id):
+        """Get a single transaction by ID"""
+        transaction = TransactionModel.query.get(id)
+        if not transaction:
+            return make_response(jsonify({'message': 'Transaction not found'}), 404)
+
+        return make_response(jsonify({'transaction': transaction.to_dict()}), 200)
+
+    @g.api.expect(transaction_model)
+    def put(self, id):
+        """Update a transaction"""
+        transaction = TransactionModel.query.get(id)
+        if not transaction:
+            return make_response(jsonify({'message': 'Transaction not found'}), 404)
+
+        data = request.json
+
+        # Validate amount if provided
+        if 'amount' in data:
+            try:
+                amount = float(data['amount'])
+            except (ValueError, TypeError):
+                return make_response(jsonify({
+                    'message': 'Amount must be a valid number'
+                }), 400)
+
+        # Validate foreign keys if provided
+        if 'categories_id' in data:
+            category = CategoriesModel.query.get(data['categories_id'])
+            if not category:
+                return make_response(jsonify({
+                    'message': 'Invalid categories_id'
+                }), 400)
+
+        if 'account_id' in data:
+            account = InstitutionAccountModel.query.get(data['account_id'])
+            if not account:
+                return make_response(jsonify({
+                    'message': 'Invalid account_id'
+                }), 400)
+
+        # Update fields if provided
+        if 'description' in data:
+            transaction.description = data['description']
+        if 'amount' in data:
+            transaction.amount = float(data['amount'])
+        if 'categories_id' in data:
+            transaction.categories_id = data['categories_id']
+        if 'account_id' in data:
+            transaction.account_id = data['account_id']
+        if 'transaction_type' in data:
+            transaction.transaction_type = data['transaction_type']
+        if 'external_date' in data:
+            transaction.external_date = data['external_date']
+        if 'external_id' in data:
+            transaction.external_id = data['external_id']
+
+        transaction.save()
+
+        return make_response(jsonify({'message': 'Transaction updated successfully', 'transaction': transaction.to_dict()}), 200)
+
+    def delete(self, id):
+        """Delete a transaction"""
+        transaction = TransactionModel.query.get(id)
+        if not transaction:
+            return make_response(jsonify({'message': 'Transaction not found'}), 404)
+
+        transaction.delete()
+
+        return make_response(jsonify({'message': 'Transaction deleted successfully'}), 200)
