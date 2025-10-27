@@ -133,7 +133,12 @@
                                                 <td>{{ transaction.account.name }}</td>
                                                 <td>{{ transaction.account.institution.name }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-light">Details</button>
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="editTransaction('{{ transaction.id }}')">
+                                                        <i class="ri-edit-line"></i> Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteTransaction('{{ transaction.id }}')">
+                                                        <i class="ri-delete-bin-line"></i> Delete
+                                                    </button>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -143,6 +148,67 @@
                             </div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="EditTransactionModal" tabindex="-1" aria-labelledby="EditTransactionModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="EditTransactionModalLabel">Edit Transaction</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" onsubmit="updateTransaction(event)">
+                                        <input type="hidden" id="edit_transaction_id">
+                                        <input type="hidden" id="edit_transaction_user_id" value="{{ user_id }}">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionDescription" class="form-label">Description</label>
+                                                    <input type="text" class="form-control" id="edit_transactionDescription" placeholder="Enter Transaction Description">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionAmount" class="form-label">Amount</label>
+                                                    <input type="number" step="0.01" class="form-control" id="edit_transactionAmount" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionCategory" class="form-label">Category</label>
+                                                    <select class="form-select" id="edit_transactionCategory">
+                                                        <option value="">Choose...</option>
+                                                        {% for category in categories %}
+                                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionAccount" class="form-label">Account</label>
+                                                    <select class="form-select" id="edit_transactionAccount">
+                                                        <option value="">Choose...</option>
+                                                        {% for account in accounts %}
+                                                        <option value="{{ account.id }}">{{ account.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- end col -->
             </div><!-- end row -->
 

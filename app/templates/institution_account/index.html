@@ -154,7 +154,12 @@
                                                 <td>{{ account.balance }}</td>
                                                 <td>{{ account.updated_at }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-light">Details</button>
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="editAccount('{{ account.id }}')">
+                                                        <i class="ri-edit-line"></i> Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="deleteAccount('{{ account.id }}')">
+                                                        <i class="ri-delete-bin-line"></i> Delete
+                                                    </button>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -164,6 +169,62 @@
                             </div>
                         </div><!-- end card-body -->
                     </div><!-- end card -->
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="EditAccountModal" tabindex="-1" aria-labelledby="EditAccountModalLabel">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="EditAccountModalLabel">Edit Account</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" onsubmit="updateAccount(event)">
+                                        <input type="hidden" id="edit_account_id">
+                                        <input type="hidden" id="edit_account_user_id" value="{{ user_id }}">
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_instituionId" class="form-label">Institution Name</label>
+                                                    <select class="form-select" id="edit_instituionId">
+                                                        <option value="">Choose...</option>
+                                                        {% for institution in institutions %}
+                                                        <option value="{{ institution.id }}">{{ institution.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_accountName" class="form-label">Account Name</label>
+                                                    <input type="text" class="form-control" id="edit_accountName" placeholder="Enter Account Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <label for="edit_accountNumber" class="form-label">Account Number</label>
+                                                <input type="text" class="form-control" id="edit_accountNumber" placeholder="Enter Account Number">
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <label for="edit_accountStatus" class="form-label">Account Status</label>
+                                                <select class="form-select" id="edit_accountStatus">
+                                                    <option value="">Choose...</option>
+                                                    <option value="active">active</option>
+                                                    <option value="inactive">inactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div><!-- end col -->
             </div><!-- end row -->
 

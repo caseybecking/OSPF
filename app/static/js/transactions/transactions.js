@@ -68,3 +68,100 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Upload button not found.");
     }
 });
+
+// Transaction CRUD functions
+function transactionsFormSubmit(event) {
+    event.preventDefault();
+    const description = document.getElementById('transactionDescription').value;
+    const user_id = document.getElementById('user_id').value;
+
+    // For now, this is a simplified version - you may want to add more fields
+    alert('Transaction creation form needs more fields. Please use CSV import instead.');
+}
+
+async function editTransaction(transactionId) {
+    // Fetch the transaction data
+    try {
+        const response = await fetch(`/api/transaction/${transactionId}`);
+        const data = await response.json();
+
+        if (response.ok) {
+            // Populate the edit form
+            document.getElementById('edit_transaction_id').value = transactionId;
+            document.getElementById('edit_transactionDescription').value = data.transaction.description || '';
+            document.getElementById('edit_transactionAmount').value = data.transaction.amount || '';
+            document.getElementById('edit_transactionCategory').value = data.transaction.categories_id || '';
+            document.getElementById('edit_transactionAccount').value = data.transaction.account_id || '';
+
+            // Show the modal
+            const editModal = new bootstrap.Modal(document.getElementById('EditTransactionModal'));
+            editModal.show();
+        } else {
+            alert('Error loading transaction: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error loading transaction');
+    }
+}
+
+function updateTransaction(event) {
+    event.preventDefault();
+
+    const transactionId = document.getElementById('edit_transaction_id').value;
+    const description = document.getElementById('edit_transactionDescription').value;
+    const amount = document.getElementById('edit_transactionAmount').value;
+    const categoryId = document.getElementById('edit_transactionCategory').value;
+    const accountId = document.getElementById('edit_transactionAccount').value;
+    const user_id = document.getElementById('edit_transaction_user_id').value;
+
+    const data = {
+        description: description,
+        amount: parseFloat(amount),
+        categories_id: categoryId,
+        account_id: accountId,
+        user_id: user_id
+    };
+
+    fetch(`/api/transaction/${transactionId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // redirect to the transactions page
+            window.location.href = '/transactions';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Error updating transaction');
+        });
+}
+
+async function deleteTransaction(transactionId) {
+    if (!confirm('Are you sure you want to delete this transaction?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/transaction/${transactionId}`, {
+            method: 'DELETE',
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Transaction deleted successfully');
+            window.location.href = '/transactions';
+        } else {
+            alert('Error deleting transaction: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error deleting transaction');
+    }
+}
