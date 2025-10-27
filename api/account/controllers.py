@@ -51,6 +51,10 @@ class Signup(Resource):
         first_name = data.get('first_name')
         last_name = data.get('last_name')
 
+        # Validate all required fields are present
+        if not all([email, username, password, first_name, last_name]):
+            return make_response(jsonify({'message': 'All fields are required'}), 400)
+
         user_email = User.query.filter_by(email=email).first()
         user_username = User.query.filter_by(username=username).first()
 
