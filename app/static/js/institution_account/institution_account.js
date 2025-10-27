@@ -13,8 +13,10 @@ function instituionAccountFormSubmit(event) {
         number: accountNumber,
         status: accountStatus,
         user_id: user_id,
-        balance: 0
-        
+        balance: 0,
+        starting_balance: 0,
+        account_type: 'checking',
+        account_class: 'asset'
     };
 
     fetch('/api/institution/account', {

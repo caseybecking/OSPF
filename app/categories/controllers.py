@@ -60,3 +60,18 @@ def categories_type():
     _categories_type = response.json().get('categories_type', [])
     user_id = session.get('_user_id')
     return render_template('categories/type.html', categories_type=_categories_type, user_id=user_id)
+
+
+@categories_blueprint.route('/categories/import')
+@login_required
+def categories_import():
+    """
+    Render the categories import page.
+
+    This view function renders the page for importing categories from CSV.
+
+    Returns:
+        str: Rendered HTML template for the categories import page.
+    """
+    user_id = session.get('_user_id')
+    return render_template('categories/import.html', user_id=user_id)

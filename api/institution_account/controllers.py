@@ -30,6 +30,26 @@ class InstitutionAccount(Resource):
         account_type = data.get('account_type')
         account_class = data.get('account_class')
 
+        # Validate enum fields (only if provided)
+        valid_statuses = ['active', 'inactive']
+        valid_types = ['checking', 'savings', 'credit', 'loan', 'investment', 'other']
+        valid_classes = ['asset', 'liability']
+
+        if status and status not in valid_statuses:
+            return make_response(jsonify({
+                'message': f'Invalid status. Must be one of: {valid_statuses}'
+            }), 400)
+
+        if account_type and account_type not in valid_types:
+            return make_response(jsonify({
+                'message': f'Invalid account type. Must be one of: {valid_types}'
+            }), 400)
+
+        if account_class and account_class not in valid_classes:
+            return make_response(jsonify({
+                'message': f'Invalid account class. Must be one of: {valid_classes}'
+            }), 400)
+
         new_account = InstitutionAccountModel(
             institution_id=institution_id,
             user_id=user_id,

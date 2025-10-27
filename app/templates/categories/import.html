@@ -1,5 +1,5 @@
 {% extends "partials/base.html" %}
-{% block title %}Import Transactions{% endblock title %}
+{% block title %}Import Categories{% endblock title %}
 {% block extra_css %}
 <style>
     .upload-area {
@@ -11,18 +11,18 @@
         background-color: #f9fafb;
     }
     .upload-area:hover {
-        border-color: #10b981;
-        background-color: #ecfdf5;
+        border-color: #3b82f6;
+        background-color: #eff6ff;
     }
     .upload-area.dragover {
-        border-color: #10b981;
-        background-color: #d1fae5;
+        border-color: #3b82f6;
+        background-color: #dbeafe;
     }
     .file-info {
         display: none;
         margin-top: 20px;
     }
-    .progress-bar-container {
+    .progress-bar {
         display: none;
         margin-top: 20px;
     }
@@ -41,10 +41,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                        <h4 class="mb-sm-0">Import Transactions</h4>
+                        <h4 class="mb-sm-0">Import Categories</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="/transactions">Transactions</a></li>
+                                <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
                                 <li class="breadcrumb-item active">Import</li>
                             </ol>
                         </div>
@@ -64,34 +64,19 @@
                                 <h6 class="alert-heading"><i class="ri-information-line"></i> CSV Format Required</h6>
                                 <p class="mb-2">Your CSV file must have the following columns:</p>
                                 <ul class="mb-2">
-                                    <li><strong>Date</strong> - Transaction date (MM/DD/YYYY or YYYY-MM-DD)</li>
-                                    <li><strong>Merchant</strong> - Merchant/vendor name</li>
-                                    <li><strong>Category</strong> - Category name (must already exist)</li>
-                                    <li><strong>Account</strong> - Account name</li>
-                                    <li><strong>Amount</strong> - Amount ($100.50 or -50.00)</li>
-                                    <li><strong>Original Statement</strong> - (Optional) Original statement text</li>
-                                    <li><strong>Notes</strong> - (Optional) Additional notes</li>
-                                    <li><strong>Tags</strong> - (Optional) Tags for categorization</li>
+                                    <li><strong>categories</strong> - The category name (e.g., "Groceries", "Salary")</li>
+                                    <li><strong>categories_group</strong> - The group name (e.g., "Food & Dining", "Income")</li>
+                                    <li><strong>categories_type</strong> - The type (e.g., "Expense", "Income", "Transfer")</li>
                                 </ul>
                                 <p class="mb-0"><strong>Example:</strong></p>
-                                <pre class="mb-0">Date,Merchant,Category,Account,Original Statement,Notes,Amount,Tags
-01/15/2024,Walmart,Groceries,Chase Checking,WMT SUPERCENTER,Weekly shopping,"-$125.50",groceries
-01/16/2024,Payroll,Salary,Chase Checking,Direct Deposit,Bi-weekly pay,"$2500.00",income</pre>
+                                <pre class="mb-0">categories,categories_group,categories_type
+Groceries,Food & Dining,Expense
+Salary,Income,Income
+Gas & Fuel,Auto & Transportation,Expense</pre>
                             </div>
 
                             <div class="alert alert-success">
-                                <p class="mb-2"><i class="ri-check-line"></i> <strong>Smart Import Features:</strong></p>
-                                <ul class="mb-0">
-                                    <li>Automatically creates accounts if they don't exist</li>
-                                    <li>Automatically creates institutions using merchant names</li>
-                                    <li>Skips duplicate transactions</li>
-                                    <li>Supports multiple date formats</li>
-                                    <li>Combines all optional fields into transaction description</li>
-                                </ul>
-                            </div>
-
-                            <div class="alert alert-warning">
-                                <p class="mb-0"><i class="ri-alert-line"></i> <strong>Important:</strong> Categories must already exist in your system. Import categories first using the <a href="/categories/import">Categories Import</a> feature.</p>
+                                <p class="mb-0"><i class="ri-check-line"></i> <strong>Smart Import:</strong> The system will automatically create types and groups if they don't exist, and skip duplicate categories.</p>
                             </div>
                         </div>
                     </div>
@@ -110,11 +95,11 @@
 
                             <div class="upload-area" id="uploadArea">
                                 <div class="upload-icon">
-                                    <i class="ri-upload-cloud-2-line" style="font-size: 48px; color: #10b981;"></i>
+                                    <i class="ri-upload-cloud-2-line" style="font-size: 48px; color: #3b82f6;"></i>
                                 </div>
                                 <h5 class="mt-3">Drag and drop your CSV file here</h5>
                                 <p class="text-muted">or</p>
-                                <label for="csvFile" class="btn btn-success">
+                                <label for="csvFile" class="btn btn-primary">
                                     <i class="ri-file-upload-line"></i> Browse File
                                 </label>
                                 <input type="file" id="csvFile" accept=".csv" style="display: none;">
@@ -132,15 +117,15 @@
                                     </button>
                                 </div>
                                 <button class="btn btn-success btn-lg w-100" id="uploadBtn">
-                                    <i class="ri-upload-2-line"></i> Import Transactions
+                                    <i class="ri-upload-2-line"></i> Import Categories
                                 </button>
                             </div>
 
-                            <div class="progress-bar-container" id="progressBar">
+                            <div class="progress-bar" id="progressBar">
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%"></div>
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
                                 </div>
-                                <p class="text-center mt-2">Processing your transactions...</p>
+                                <p class="text-center mt-2">Processing your file...</p>
                             </div>
 
                             <div class="result-message" id="resultMessage">
@@ -161,5 +146,5 @@
 {% endblock content %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/transactions/import.js') }}"></script>
+<script src="{{ url_for('static', filename='js/categories/import.js') }}"></script>
 {% endblock extra_js %}

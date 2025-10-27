@@ -19,6 +19,12 @@ class Institution(Resource):
         location = data.get('location')
         description = data.get('description')
 
+        # Validate required fields (only user_id and name are required)
+        if not all([user_id, name]):
+            return make_response(jsonify({
+                'message': 'user_id and name are required'
+            }), 400)
+
         new_institution = InstitutionModel(
             user_id=user_id,
             name=name,
