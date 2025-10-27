@@ -107,6 +107,7 @@
                                                     </div>
                                                 </th>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Merchant</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Category</th>
                                                 <th scope="col">Amount</th>
@@ -127,9 +128,10 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ transaction.external_date|format_datetime('short') }}</td>
+                                                <td>{{ transaction.merchant }}</td>
                                                 <td>{{ transaction.description }}</td>
-                                                <td>{{ transaction.amount }}</td>
                                                 <td>{{ transaction.categories.name }}</td>
+                                                <td>{{ transaction.amount }}</td>
                                                 <td>{{ transaction.account.name }}</td>
                                                 <td>{{ transaction.account.institution.name }}</td>
                                                 <td>
@@ -164,8 +166,32 @@
                                         <div class="row g-3">
                                             <div class="col-xxl-12">
                                                 <div>
+                                                    <label for="edit_transactionMerchant" class="form-label">Merchant</label>
+                                                    <input type="text" class="form-control" id="edit_transactionMerchant" placeholder="Enter Merchant Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionOriginalStatement" class="form-label">Original Statement</label>
+                                                    <input type="text" class="form-control" id="edit_transactionOriginalStatement" placeholder="Original Bank Statement">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionNotes" class="form-label">Notes</label>
+                                                    <textarea class="form-control" id="edit_transactionNotes" rows="2" placeholder="Enter Notes"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
+                                                    <label for="edit_transactionTags" class="form-label">Tags</label>
+                                                    <input type="text" class="form-control" id="edit_transactionTags" placeholder="Enter Tags (comma separated)">
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12">
+                                                <div>
                                                     <label for="edit_transactionDescription" class="form-label">Description</label>
-                                                    <input type="text" class="form-control" id="edit_transactionDescription" placeholder="Enter Transaction Description">
+                                                    <input type="text" class="form-control" id="edit_transactionDescription" placeholder="Additional Description">
                                                 </div>
                                             </div>
                                             <div class="col-xxl-12">

@@ -88,6 +88,10 @@ async function editTransaction(transactionId) {
         if (response.ok) {
             // Populate the edit form
             document.getElementById('edit_transaction_id').value = transactionId;
+            document.getElementById('edit_transactionMerchant').value = data.transaction.merchant || '';
+            document.getElementById('edit_transactionOriginalStatement').value = data.transaction.original_statement || '';
+            document.getElementById('edit_transactionNotes').value = data.transaction.notes || '';
+            document.getElementById('edit_transactionTags').value = data.transaction.tags || '';
             document.getElementById('edit_transactionDescription').value = data.transaction.description || '';
             document.getElementById('edit_transactionAmount').value = data.transaction.amount || '';
             document.getElementById('edit_transactionCategory').value = data.transaction.categories_id || '';
@@ -109,6 +113,10 @@ function updateTransaction(event) {
     event.preventDefault();
 
     const transactionId = document.getElementById('edit_transaction_id').value;
+    const merchant = document.getElementById('edit_transactionMerchant').value;
+    const originalStatement = document.getElementById('edit_transactionOriginalStatement').value;
+    const notes = document.getElementById('edit_transactionNotes').value;
+    const tags = document.getElementById('edit_transactionTags').value;
     const description = document.getElementById('edit_transactionDescription').value;
     const amount = document.getElementById('edit_transactionAmount').value;
     const categoryId = document.getElementById('edit_transactionCategory').value;
@@ -116,6 +124,10 @@ function updateTransaction(event) {
     const user_id = document.getElementById('edit_transaction_user_id').value;
 
     const data = {
+        merchant: merchant,
+        original_statement: originalStatement,
+        notes: notes,
+        tags: tags,
         description: description,
         amount: parseFloat(amount),
         categories_id: categoryId,
