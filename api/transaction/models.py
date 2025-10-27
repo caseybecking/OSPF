@@ -25,9 +25,13 @@ class TransactionModel(Base):
     transaction_type = db.Column(db.String(255), nullable=False)
     external_id = db.Column(db.String(255), nullable=False)
     external_date = db.Column(db.DateTime, nullable=True)
+    merchant = db.Column(db.String(255), nullable=True)
+    original_statement = db.Column(db.String(255), nullable=True)
+    notes = db.Column(db.Text, nullable=True)
+    tags = db.Column(db.String(255), nullable=True)
     description = db.Column(db.String(255), nullable=True)
 
-    def __init__(self, user_id, categories_id, account_id, amount, transaction_type, external_id, external_date, description):
+    def __init__(self, user_id, categories_id, account_id, amount, transaction_type, external_id, external_date, merchant=None, original_statement=None, notes=None, tags=None, description=None):
         """
         Initialize a TransactionModel instance.
 
@@ -39,6 +43,10 @@ class TransactionModel(Base):
             transaction_type (str): The transaction_type of the transaction.
             external_id (str): The external ID of the transaction.
             external_date (datetime): The external date of the transaction.
+            merchant (str): The merchant name for the transaction.
+            original_statement (str): The original statement text from the bank.
+            notes (str): User notes for the transaction.
+            tags (str): Tags for categorizing the transaction.
             description (str): The description of the transaction.
         """
         self.user_id = user_id
@@ -48,6 +56,10 @@ class TransactionModel(Base):
         self.transaction_type = transaction_type
         self.external_id = external_id
         self.external_date = external_date
+        self.merchant = merchant
+        self.original_statement = original_statement
+        self.notes = notes
+        self.tags = tags
         self.description = description
 
     def __repr__(self):
@@ -77,6 +89,10 @@ class TransactionModel(Base):
             'transaction_type': self.transaction_type,
             'external_id': self.external_id,
             'external_date': self.external_date,
+            'merchant': self.merchant,
+            'original_statement': self.original_statement,
+            'notes': self.notes,
+            'tags': self.tags,
             'description': self.description,
             'created_at': self.created_at,
             'updated_at': self.updated_at

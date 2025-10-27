@@ -117,13 +117,30 @@ uploadBtn.addEventListener('click', async () => {
 function showSuccess(data) {
     let errorDetailsHtml = '';
     if (data.error_details && data.error_details.length > 0) {
+        let errorSummaryHtml = '';
+        if (data.error_summary) {
+            errorSummaryHtml = `
+                <div class="mb-3">
+                    <strong>Error Summary:</strong>
+                    <ul>
+                        ${Object.entries(data.error_summary).map(([type, count]) =>
+                            `<li>${type.replace(/_/g, ' ')}: ${count}</li>`
+                        ).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
         errorDetailsHtml = `
             <hr>
             <div class="alert alert-warning">
-                <h6 class="alert-heading">Import Errors (showing first 10):</h6>
-                <ul class="mb-0">
-                    ${data.error_details.map(err => `<li>${err}</li>`).join('')}
-                </ul>
+                <h6 class="alert-heading">Import Errors (showing first 50):</h6>
+                ${errorSummaryHtml}
+                <div style="max-height: 300px; overflow-y: auto;">
+                    <ul class="mb-0">
+                        ${data.error_details.map(err => `<li><small>${err}</small></li>`).join('')}
+                    </ul>
+                </div>
             </div>
         `;
     }

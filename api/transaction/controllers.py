@@ -22,6 +22,10 @@ transaction_model = g.api.model('Transaction', {
     'transaction_type': fields.String(required=True, description='Transaction Type'),
     'external_id': fields.String(description='External ID'),
     'external_date': fields.DateTime(description='External Date'),
+    'merchant': fields.String(description='Merchant Name'),
+    'original_statement': fields.String(description='Original Statement'),
+    'notes': fields.String(description='Notes'),
+    'tags': fields.String(description='Tags'),
     'description': fields.String(description='Description')
 })
 
@@ -37,6 +41,10 @@ class Transaction(Resource):
         transaction_type = data.get('transaction_type')
         external_id = data.get('external_id')
         external_date = data.get('external_date')
+        merchant = data.get('merchant')
+        original_statement = data.get('original_statement')
+        notes = data.get('notes')
+        tags = data.get('tags')
         description = data.get('description')
 
         # Validate required fields
@@ -61,6 +69,10 @@ class Transaction(Resource):
             transaction_type=transaction_type,
             external_id=external_id,
             external_date=external_date,
+            merchant=merchant,
+            original_statement=original_statement,
+            notes=notes,
+            tags=tags,
             description=description
         )
         new_transaction.save()
@@ -210,20 +222,11 @@ class TransactionCSVImport(Resource):
                             error_count += 1
                             continue
 
-                        # Build description from available fields
-                        description_parts = []
-                        if merchant:
-                            description_parts.append(f"Merchant: {merchant}")
-                        if original_statement:
-                            description_parts.append(f"Statement: {original_statement}")
-                        if notes:
-                            description_parts.append(f"Notes: {notes}")
-                        if tags:
-                            description_parts.append(f"Tags: {tags}")
+                        # Store fields separately (no joining)
+                        # Description can be used for additional custom info if needed
+                        description = None  # Keep empty unless specifically provided
 
-                        description = " | ".join(description_parts) if description_parts else merchant
-
-                        # Create transaction
+                        # Create transaction with all fields separate
                         self.create_transaction(
                             user_id=user_id,
                             categories_id=category_id,
@@ -232,6 +235,10 @@ class TransactionCSVImport(Resource):
                             transaction_type=_transaction_type,
                             external_id=external_id,
                             external_date=formatted_timestamp,
+                            merchant=merchant,
+                            original_statement=original_statement,
+                            notes=notes,
+                            tags=tags,
                             description=description
                         )
                         created_count += 1
@@ -251,8 +258,24 @@ class TransactionCSVImport(Resource):
                 'errors': error_count
             }
 
-            if errors and len(errors) <= 10:  # Only include first 10 errors
-                response_data['error_details'] = errors[:10]
+            if errors:
+                # Show first 50 errors to understand patterns
+                response_data['error_details'] = errors[:50]
+                # Also include a summary of error types
+                error_summary = {}
+                for error in errors:
+                    # Extract error type
+                    if "Category" in error and "not found" in error:
+                        error_summary['category_not_found'] = error_summary.get('category_not_found', 0) + 1
+                    elif "Could not create account" in error:
+                        error_summary['account_creation_failed'] = error_summary.get('account_creation_failed', 0) + 1
+                    elif "Could not parse" in error:
+                        error_summary['date_parse_error'] = error_summary.get('date_parse_error', 0) + 1
+                    elif "Invalid amount" in error:
+                        error_summary['invalid_amount'] = error_summary.get('invalid_amount', 0) + 1
+                    else:
+                        error_summary['other'] = error_summary.get('other', 0) + 1
+                response_data['error_summary'] = error_summary
 
             return make_response(jsonify(response_data), 201 if created_count > 0 else 200)
 
@@ -347,7 +370,7 @@ class TransactionCSVImport(Resource):
 
         return account.id
 
-    def create_transaction(self,user_id, categories_id, account_id, amount, transaction_type, external_id, external_date, description):
+    def create_transaction(self,user_id, categories_id, account_id, amount, transaction_type, external_id, external_date, merchant=None, original_statement=None, notes=None, tags=None, description=None):
         print(f"Creating transaction {external_id}...")
         transaction = TransactionModel(
             user_id=user_id,
@@ -357,6 +380,10 @@ class TransactionCSVImport(Resource):
             transaction_type=transaction_type,
             external_id=external_id,
             external_date=external_date,
+            merchant=merchant,
+            original_statement=original_statement,
+            notes=notes,
+            tags=tags,
             description=description
         )
         db.session.add(transaction)
@@ -408,6 +435,14 @@ class TransactionDetail(Resource):
                 }), 400)
 
         # Update fields if provided
+        if 'merchant' in data:
+            transaction.merchant = data['merchant']
+        if 'original_statement' in data:
+            transaction.original_statement = data['original_statement']
+        if 'notes' in data:
+            transaction.notes = data['notes']
+        if 'tags' in data:
+            transaction.tags = data['tags']
         if 'description' in data:
             transaction.description = data['description']
         if 'amount' in data:
