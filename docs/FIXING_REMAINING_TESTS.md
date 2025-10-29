@@ -207,7 +207,7 @@ assert response.status_code in [400, 500]
 
 ### Level 1: Quick Wins (30 min total) - Gets to 95%+ pass rate
 
-1. ✅ Create `uploads/` directory (DONE)
+1. Create `uploads/` directory (DONE)
 2. Fix API response message expectations (10 min)
 3. Fix `__repr__` test expectations (5 min)
 4. Fix model constructor arguments (10 min)

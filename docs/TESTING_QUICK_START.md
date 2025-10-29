@@ -182,11 +182,11 @@ Tests can be integrated into CI/CD pipelines:
 
 ## Next Steps
 
-1. ✅ Read full documentation: `tests/README.md`
-2. ✅ Explore existing tests for examples
-3. ✅ Run tests before committing code
-4. ✅ Maintain >90% coverage
-5. ✅ Write tests for new features
+1. Read full documentation: `tests/README.md`
+2. Explore existing tests for examples
+3. Run tests before committing code
+4. Maintain >90% coverage
+5. Write tests for new features
 
 ## Quick Reference
 

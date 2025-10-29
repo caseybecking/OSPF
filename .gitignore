@@ -264,3 +264,6 @@ app/config.py
 Pipfile.lock
 database.erd
 uploads/*
+data/monarch-categories.json
+data/monarch-categories-data.csv
+data/transactions-196135697039987462-196135697026283140-eaf6170e-7fed-4d55-8759-c0659c1af537.csv

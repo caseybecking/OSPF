@@ -1,0 +1,380 @@
+{% extends "partials/base.html" %}
+{% block title %}Paycheck Analytics{% endblock title %}
+{% block extra_css %}
+<style>
+.analytics-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+.chart-container {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    position: relative;
+    height: 400px; /* Fixed height for chart container */
+}
+.chart-wrapper {
+    position: relative;
+    height: 300px; /* Fixed height for chart wrapper */
+    width: 100%;
+}
+.employer-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #007bff;
+}
+.trend-up {
+    color: #28a745;
+}
+.trend-down {
+    color: #dc3545;
+}
+.percentage-display {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+</style>
+{% endblock extra_css %}
+{% block content %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                        <h4 class="mb-sm-0">Paycheck Analytics</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ url_for('dashboards.index') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url_for('paychecks.index') }}">Paychecks</a></li>
+                                <li class="breadcrumb-item active">Analytics</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <!-- Summary Cards -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="analytics-card">
+                        <div class="stat-label">Total Paychecks</div>
+                        <div class="stat-value">{{ summary.total_paychecks }}</div>
+                        <small><i class="ri-file-list-line"></i> Records</small>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="analytics-card">
+                        <div class="stat-label">Total Gross Income</div>
+                        <div class="stat-value">${{ "%.0f"|format(summary.total_gross) }}</div>
+                        <small><i class="ri-money-dollar-circle-line"></i> Before deductions</small>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="analytics-card">
+                        <div class="stat-label">Total Net Pay</div>
+                        <div class="stat-value">${{ "%.0f"|format(summary.total_net) }}</div>
+                        <small><i class="ri-wallet-line"></i> Take home</small>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="analytics-card">
+                        <div class="stat-label">Average Tax Rate</div>
+                        <div class="stat-value percentage-display">{{ "%.1f"|format(summary.avg_tax_rate) }}%</div>
+                        <small><i class="ri-percent-line"></i> Effective rate</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Summary Row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-0">Average Gross</h6>
+                                <h4 class="mb-0 text-success">${{ "%.0f"|format(summary.avg_gross) }}</h4>
+                            </div>
+                            <i class="ri-line-chart-line display-6 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-0">Average Net</h6>
+                                <h4 class="mb-0 text-info">${{ "%.0f"|format(summary.avg_net) }}</h4>
+                            </div>
+                            <i class="ri-line-chart-line display-6 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-0">Total Taxes</h6>
+                                <h4 class="mb-0 text-warning">${{ "%.0f"|format(summary.total_taxes) }}</h4>
+                            </div>
+                            <i class="ri-subtract-line display-6 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-0">Retirement Rate</h6>
+                                <h4 class="mb-0 text-primary">{{ "%.1f"|format(summary.avg_retirement_rate) }}%</h4>
+                            </div>
+                            <i class="ri-percent-line display-6 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row">
+                <!-- Monthly Trends Chart -->
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <h5 class="mb-3">Monthly Income Trends (Last 12 Months)</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="monthlyTrendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tax vs Retirement Pie Chart -->
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <h5 class="mb-3">Deduction Breakdown</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="deductionBreakdownChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employer Analysis -->
+            {% if employers|length > 1 %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <h5 class="mb-3">Analysis by Employer</h5>
+                        <div class="row">
+                            {% for employer, paychecks in employers.items() %}
+                            <div class="col-lg-6 col-md-12">
+                                <div class="employer-card">
+                                    <h6 class="mb-3">{{ employer }}</h6>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <small class="text-muted">Paychecks</small>
+                                            <div class="h6">{{ paychecks|length }}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Total Gross</small>
+                                            <div class="h6">${{ "%.0f"|format(paychecks|sum(attribute='gross_income')) }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-6">
+                                            <small class="text-muted">Avg Tax Rate</small>
+                                            <div class="h6">{{ "%.1f"|format((paychecks|sum(attribute='total_taxes') / paychecks|sum(attribute='gross_income') * 100) if paychecks|sum(attribute='gross_income') > 0 else 0) }}%</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Avg 401k Rate</small>
+                                            <div class="h6">{{ "%.1f"|format((paychecks|sum(attribute='total_retirement') / paychecks|sum(attribute='gross_income') * 100) if paychecks|sum(attribute='gross_income') > 0 else 0) }}%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Recent Paychecks -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Recent Paychecks</h5>
+                            <a href="{{ url_for('paychecks.index') }}" class="btn btn-outline-primary btn-sm">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Employer</th>
+                                        <th>Gross Income</th>
+                                        <th>Net Pay</th>
+                                        <th>Tax Rate</th>
+                                        <th>401k Rate</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for paycheck in recent_paychecks %}
+                                    <tr>
+                                        <td>{{ paycheck.pay_date.strftime('%m/%d/%Y') }}</td>
+                                        <td>{{ paycheck.employer }}</td>
+                                        <td class="text-success">${{ "%.2f"|format(paycheck.gross_income) }}</td>
+                                        <td class="text-info">${{ "%.2f"|format(paycheck.net_pay) }}</td>
+                                        <td>
+                                            <span class="badge bg-warning">{{ "%.1f"|format(paycheck.effective_tax_rate) }}%</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary">{{ "%.1f"|format(paycheck.retirement_contribution_rate) }}%</span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url_for('paychecks.detail', paycheck_id=paycheck.id) }}" class="btn btn-sm btn-outline-primary">
+                                                <i class="ri-eye-line"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Chart.js configuration defaults
+    Chart.defaults.plugins.legend.display = true;
+    Chart.defaults.responsive = true;
+    Chart.defaults.maintainAspectRatio = false;
+    
+    // Monthly Trends Chart
+    const monthlyCtx = document.getElementById('monthlyTrendsChart').getContext('2d');
+    const monthlyData = {{ monthly_trends|tojson }};
+    
+    new Chart(monthlyCtx, {
+        type: 'line',
+        data: {
+            labels: monthlyData.map(item => `${item.month} ${item.year}`),
+            datasets: [{
+                label: 'Gross Income',
+                data: monthlyData.map(item => item.gross),
+                borderColor: '#28a745',
+                backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                tension: 0.4
+            }, {
+                label: 'Net Pay',
+                data: monthlyData.map(item => item.net),
+                borderColor: '#17a2b8',
+                backgroundColor: 'rgba(23, 162, 184, 0.1)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': $' + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 0 // Disable animations to prevent resize loops
+            }
+        }
+    });
+
+    // Deduction Breakdown Pie Chart
+    const pieCtx = document.getElementById('deductionBreakdownChart').getContext('2d');
+    const totalTaxes = {{ summary.total_taxes }};
+    const totalRetirement = {{ summary.total_retirement }};
+    const otherDeductions = {{ summary.total_gross - summary.total_net - summary.total_taxes - summary.total_retirement }};
+
+    new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Taxes', 'Retirement', 'Other Deductions'],
+            datasets: [{
+                data: [totalTaxes, totalRetirement, otherDeductions],
+                backgroundColor: [
+                    '#ffc107',
+                    '#007bff',
+                    '#6c757d'
+                ],
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((context.parsed / total) * 100).toFixed(1);
+                            return context.label + ': $' + context.parsed.toLocaleString() + ' (' + percentage + '%)';
+                        }
+                    }
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            animation: {
+                duration: 0 // Disable animations to prevent resize loops
+            }
+        }
+    });
+});
+</script>
+{% endblock content %}

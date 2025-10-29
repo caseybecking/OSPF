@@ -1,7 +1,7 @@
 # Transactions CSV Import Feature
 
 **Date:** October 26, 2025
-**Status:** ✅ Complete
+**Status:** Complete
 
 ## Overview
 
@@ -275,11 +275,11 @@ Date,Merchant,Category,Account,Original Statement,Notes,Amount,Tags
 ```
 
 **Expected Results:**
-- ✅ 3 transactions created (if categories exist)
-- ✅ 0 duplicates skipped (first import)
-- ✅ 0 errors (if all categories exist)
-- ✅ Accounts auto-created if needed
-- ✅ Institutions created from merchant names
+- 3 transactions created (if categories exist)
+- 0 duplicates skipped (first import)
+- 0 errors (if all categories exist)
+- Accounts auto-created if needed
+- Institutions created from merchant names
 
 ---
 
@@ -354,7 +354,7 @@ Date,Merchant,Category,Account,Original Statement,Notes,Amount,Tags
 
 ## Summary
 
-✅ **Complete transaction CSV import system**
+**Complete transaction CSV import system**
 - Custom column format support (Date, Merchant, Category, Account, etc.)
 - Smart account and institution creation
 - Rich transaction descriptions

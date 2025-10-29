@@ -193,6 +193,32 @@ def authenticated_client(client, test_user):
 
 
 @pytest.fixture
+def test_paycheck(session, test_user):
+    """Create a test paycheck"""
+    from datetime import date
+    from api.paycheck.models import PaycheckModel
+    
+    paycheck = PaycheckModel(
+        user_id=test_user.id,
+        employer='Test Corporation',
+        pay_period_start=date(2024, 1, 1),
+        pay_period_end=date(2024, 1, 15),
+        pay_date=date(2024, 1, 20),
+        gross_income=5000.00,
+        net_pay=3800.00,
+        federal_tax=800.00,
+        state_tax=200.00,
+        social_security_tax=310.00,
+        medicare_tax=72.50,
+        retirement_401k=500.00,
+        health_insurance=150.00,
+        notes='Test paycheck for automated testing'
+    )
+    paycheck.save()
+    return paycheck
+
+
+@pytest.fixture
 def sample_csv_file(tmp_path):
     """Create a sample CSV file for testing imports"""
     csv_content = """Transaction ID,Category,Institution,Account,Date,Amount,Description
