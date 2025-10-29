@@ -4,7 +4,7 @@ A comprehensive personal finance management system built with Flask, featuring t
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Python 3.13+
@@ -31,35 +31,35 @@ The application will be available at: http://localhost:5000
 
 ---
 
-## ✨ Features
+##  Features
 
 ### Core Functionality
-- ✅ **User Authentication** - Signup, login, session management
-- ✅ **Institutions** - Track financial institutions
-- ✅ **Accounts** - Manage checking, savings, credit cards, loans, etc.
-- ✅ **Categories** - Three-level hierarchy (Type → Group → Category)
-- ✅ **Transactions** - Full transaction tracking with pagination
+- **User Authentication** - Signup, login, session management
+- **Institutions** - Track financial institutions
+- **Accounts** - Manage checking, savings, credit cards, loans, etc.
+- **Categories** - Three-level hierarchy (Type → Group → Category)
+- **Transactions** - Full transaction tracking with pagination
 
 ### Import Features
-- ✅ **Categories CSV Import** - Bulk import categories with auto-creation of types and groups
-- ✅ **Transactions CSV Import** - Import transactions with smart account creation
+- **Categories CSV Import** - Bulk import categories with auto-creation of types and groups
+- **Transactions CSV Import** - Import transactions with smart account creation
 
 ### API Features
-- ✅ **RESTful API** - Complete REST API with Flask-RESTX
-- ✅ **Swagger Documentation** - Auto-generated API docs at `/api/doc/`
-- ✅ **Input Validation** - Comprehensive validation preventing crashes
-- ✅ **Error Handling** - Proper error codes and messages
+- **RESTful API** - Complete REST API with Flask-RESTX
+- **Swagger Documentation** - Auto-generated API docs at `/api/doc/`
+- **Input Validation** - Comprehensive validation preventing crashes
+- **Error Handling** - Proper error codes and messages
 
 ---
 
-## 📊 Test Coverage
+## Test Coverage
 
 **Current Status:** 121 out of 142 tests passing (85.2%)
 
 | Category | Tests | Passed | Pass Rate |
 |----------|-------|--------|-----------|
-| Models | 63 | 63 | **100%** ✅ |
-| API Endpoints | 56 | 54 | **96%** ✅ |
+| Models | 63 | 63 | **100%** |
+| API Endpoints | 56 | 54 | **96%** |
 | Web Controllers | 23 | 4 | 17% |
 
 ### Running Tests
@@ -78,7 +78,7 @@ pytest --cov=api --cov=app --cov-report=html
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 **Complete documentation is available in the [/docs](docs/) directory.**
 
@@ -98,7 +98,7 @@ pytest --cov=api --cov=app --cov-report=html
 
 ---
 
-## 🎯 Key Features
+##  Key Features
 
 ### Categories Import
 
@@ -125,7 +125,7 @@ Date,Merchant,Category,Account,Original Statement,Notes,Amount,Tags
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 OSPF/
@@ -163,7 +163,7 @@ OSPF/
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 Configuration is in `app/config.py`:
 
@@ -207,7 +207,7 @@ class Config(object):
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 ### Backend
 - **Flask** - Web framework
@@ -230,20 +230,20 @@ class Config(object):
 
 ---
 
-## 📈 Recent Updates
+## Recent Updates
 
 ### October 26, 2025
-- ✅ Created comprehensive test suite (142 tests)
-- ✅ Fixed test issues (improved from 62% to 85% pass rate)
-- ✅ Added input validation to 5 API controllers
-- ✅ Implemented categories CSV import feature
-- ✅ Implemented transactions CSV import feature
-- ✅ Organized documentation into /docs directory
-- ✅ Fixed account creation frontend issue
+- Created comprehensive test suite (142 tests)
+- Fixed test issues (improved from 62% to 85% pass rate)
+- Added input validation to 5 API controllers
+- Implemented categories CSV import feature
+- Implemented transactions CSV import feature
+- Organized documentation into /docs directory
+- Fixed account creation frontend issue
 
 ---
 
-## 🎓 Getting Started Guide
+##  Getting Started Guide
 
 ### 1. First Time Setup
 
@@ -284,7 +284,7 @@ python main.py
 
 ---
 
-## 🐛 Known Issues
+##  Known Issues
 
 ### Test Suite
 - 21 tests currently failing (15% failure rate)
@@ -296,7 +296,7 @@ See [Final Fix Results](docs/FINAL_FIX_RESULTS.md) for details and fixes.
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 ### Running Tests Before Committing
 
@@ -319,13 +319,13 @@ pytest --cov=api --cov=app --cov-report=term-missing
 
 ---
 
-## 📝 License
+##  License
 
 This project is for personal use.
 
 ---
 
-## 📞 Support
+##  Support
 
 ### Documentation
 - [Complete Documentation Index](docs/INDEX.md)
@@ -340,11 +340,11 @@ This project is for personal use.
 
 ---
 
-## 🎉 Status
+## Status
 
 **Current Version:** 1.0
 **Test Coverage:** 85.2% (121/142 tests passing)
-**Production Status:** ✅ Ready for use
+**Production Status:** Ready for use
 **Last Updated:** October 26, 2025
 
 ---

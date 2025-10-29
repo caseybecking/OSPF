@@ -157,6 +157,35 @@
                             </div>
                         </li>
                         
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarPaycheck" data-bs-toggle="collapse" role="button"
+                                aria-expanded="false" aria-controls="sidebarPaycheck">
+                                <i class="ri-money-dollar-circle-line"></i> <span data-key="t-paycheck">Paychecks</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarPaycheck">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="#sidebarPaychecks" class="nav-link" data-bs-toggle="collapse" role="button"
+                                            aria-expanded="false" aria-controls="sidebarPaycheck" data-key="t-paycheck-menu"> Paycheck
+                                        </a>
+                                        <div class="collapse menu-dropdown" id="sidebarPaychecks">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a href="{{ url_for('paychecks.index') }}" class="nav-link" data-key="t-paycheck-list"> All Paychecks </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ url_for('paychecks.new') }}" class="nav-link" data-key="t-paycheck-new"> Add New Paycheck</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ url_for('paychecks.analytics') }}" class="nav-link" data-key="t-paycheck-analytics"> Analytics</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
                     </ul>
                 </div>
                 <!-- Sidebar -->

@@ -1,0 +1,352 @@
+{% extends "partials/base.html" %}
+{% block title %}Add New Paycheck{% endblock title %}
+{% block extra_css %}
+<style>
+.form-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.section-title {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 8px;
+}
+.auto-calculate {
+    background-color: #e9ecef;
+    pointer-events: none;
+}
+</style>
+{% endblock extra_css %}
+{% block content %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                        <h4 class="mb-sm-0">Add New Paycheck</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ url_for('dashboards.index') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url_for('paychecks.index') }}">Paychecks</a></li>
+                                <li class="breadcrumb-item active">Add New</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="POST" id="paycheckForm">
+                                
+                                <!-- Basic Information -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Basic Information</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="employer" class="form-label">Employer <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="employer" name="employer" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="employee_name" class="form-label">Employee Name</label>
+                                            <select class="form-control" id="employee_name" name="employee_name">
+                                                <option value="Self" selected>Self</option>
+                                                <option value="Spouse">Spouse</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="pay_date" class="form-label">Pay Date <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" id="pay_date" name="pay_date" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="pay_period_start" class="form-label">Pay Period Start <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" id="pay_period_start" name="pay_period_start" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="pay_period_end" class="form-label">Pay Period End <span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control" id="pay_period_end" name="pay_period_end" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Income Information -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Income Information</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gross_income" class="form-label">Gross Income <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control" id="gross_income" name="gross_income" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="net_pay" class="form-label">Net Pay <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control" id="net_pay" name="net_pay" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="bonus" class="form-label">Bonus</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control" id="bonus" name="bonus" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="commission" class="form-label">Commission</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control" id="commission" name="commission" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="total_deductions_display" class="form-label">Total Deductions</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="text" class="form-control auto-calculate" id="total_deductions_display" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tax Information -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Tax Deductions</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="federal_tax" class="form-label">Federal Tax</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="federal_tax" name="federal_tax" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="state_tax" class="form-label">State Tax</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="state_tax" name="state_tax" value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="social_security_tax" class="form-label">Social Security Tax</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="social_security_tax" name="social_security_tax" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="medicare_tax" class="form-label">Medicare Tax</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="medicare_tax" name="medicare_tax" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="other_taxes" class="form-label">Other Taxes</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="other_taxes" name="other_taxes" value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Insurance Deductions -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Insurance Deductions</h6>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="health_insurance" class="form-label">Health Insurance</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="health_insurance" name="health_insurance" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="dental_insurance" class="form-label">Dental Insurance</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="dental_insurance" name="dental_insurance" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="vision_insurance" class="form-label">Vision Insurance</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="vision_insurance" name="vision_insurance" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="voluntary_life_insurance" class="form-label">Voluntary Life Insurance</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="voluntary_life_insurance" name="voluntary_life_insurance" value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Retirement Contributions -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Retirement Contributions</h6>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="retirement_401k" class="form-label">401(k) Contribution</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="retirement_401k" name="retirement_401k" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="retirement_403b" class="form-label">403(b) Contribution</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="retirement_403b" name="retirement_403b" value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="retirement_ira" class="form-label">IRA Contribution</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="retirement_ira" name="retirement_ira" value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Work Details -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Work Details (Optional)</h6>
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <label for="hours_worked" class="form-label">Hours Worked</label>
+                                            <input type="number" step="0.25" class="form-control" id="hours_worked" name="hours_worked">
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="hourly_rate" class="form-label">Hourly Rate</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control" id="hourly_rate" name="hourly_rate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="overtime_hours" class="form-label">Overtime Hours</label>
+                                            <input type="number" step="0.25" class="form-control" id="overtime_hours" name="overtime_hours" value="0.00">
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="overtime_rate" class="form-label">Overtime Rate</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control" id="overtime_rate" name="overtime_rate">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Other Deductions & Notes -->
+                                <div class="form-section">
+                                    <h6 class="section-title">Other</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="other_deductions" class="form-label">Other Deductions</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" class="form-control deduction-field" id="other_deductions" name="other_deductions" value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mb-3">
+                                            <label for="notes" class="form-label">Notes</label>
+                                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Additional notes about this paycheck..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{{ url_for('paychecks.index') }}" class="btn btn-secondary">Cancel</a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="ri-save-line"></i> Save Paycheck
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-calculate total deductions
+    function updateTotalDeductions() {
+        const deductionFields = document.querySelectorAll('.deduction-field');
+        let total = 0;
+        
+        deductionFields.forEach(field => {
+            const value = parseFloat(field.value) || 0;
+            total += value;
+        });
+        
+        document.getElementById('total_deductions_display').value = total.toFixed(2);
+    }
+    
+    // Add event listeners to all deduction fields
+    document.querySelectorAll('.deduction-field').forEach(field => {
+        field.addEventListener('input', updateTotalDeductions);
+    });
+    
+    // Initial calculation
+    updateTotalDeductions();
+    
+    // Validate pay period dates
+    document.getElementById('pay_period_start').addEventListener('change', function() {
+        const startDate = new Date(this.value);
+        const endDateField = document.getElementById('pay_period_end');
+        const endDate = new Date(endDateField.value);
+        
+        if (endDateField.value && startDate > endDate) {
+            alert('Pay period start date must be before end date.');
+            this.focus();
+        }
+    });
+    
+    document.getElementById('pay_period_end').addEventListener('change', function() {
+        const endDate = new Date(this.value);
+        const startDateField = document.getElementById('pay_period_start');
+        const startDate = new Date(startDateField.value);
+        
+        if (startDateField.value && startDate > endDate) {
+            alert('Pay period end date must be after start date.');
+            this.focus();
+        }
+    });
+});
+</script>
+{% endblock content %}

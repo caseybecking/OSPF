@@ -192,31 +192,31 @@ tests/
 ### Current Coverage Areas
 
 #### Models (100% coverage target)
-- ✅ User model (creation, authentication, API keys, uniqueness)
-- ✅ Institution model (CRUD operations, relationships)
-- ✅ InstitutionAccount model (all account types, status, balances)
-- ✅ CategoriesType model (creation, deletion)
-- ✅ CategoriesGroup model (creation, deletion)
-- ✅ Categories model (hierarchy, relationships)
-- ✅ Transaction model (CRUD, relationships, date handling, amounts)
+- User model (creation, authentication, API keys, uniqueness)
+- Institution model (CRUD operations, relationships)
+- InstitutionAccount model (all account types, status, balances)
+- CategoriesType model (creation, deletion)
+- CategoriesGroup model (creation, deletion)
+- Categories model (hierarchy, relationships)
+- Transaction model (CRUD, relationships, date handling, amounts)
 
 #### API Endpoints
-- ✅ User signup/login
-- ✅ Institution CRUD
-- ✅ Account CRUD with all types and classes
-- ✅ Categories CRUD (Type, Group, Category)
-- ✅ Transaction CRUD
-- ✅ CSV import with various scenarios
-- ✅ Pagination
-- ✅ Error handling
+- User signup/login
+- Institution CRUD
+- Account CRUD with all types and classes
+- Categories CRUD (Type, Group, Category)
+- Transaction CRUD
+- CSV import with various scenarios
+- Pagination
+- Error handling
 
 #### Web Controllers
-- ✅ Authentication pages (login, signup, logout)
-- ✅ Dashboard
-- ✅ All management pages (institutions, accounts, categories, transactions)
-- ✅ CSV import page
-- ✅ Authentication requirements
-- ✅ API documentation
+- Authentication pages (login, signup, logout)
+- Dashboard
+- All management pages (institutions, accounts, categories, transactions)
+- CSV import page
+- Authentication requirements
+- API documentation
 
 ### Coverage Goals
 

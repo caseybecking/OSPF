@@ -39,6 +39,8 @@ def create_app():
     app.register_blueprint(categories_blueprint)
     from app.transactions.controllers import transactions_blueprint
     app.register_blueprint(transactions_blueprint)
+    from app.paycheck.controllers import paychecks
+    app.register_blueprint(paychecks)
 
     # Models
     from api.user.models import User
@@ -61,6 +63,7 @@ def create_app():
         from api.categories_type.controllers import CategoriesType
         from api.categories.controllers import Categories
         from api.transaction.controllers import Transaction
+        from api.paycheck.controllers import Paycheck, PaycheckDetail, PaycheckAnalytics, PaycheckTrends, PaycheckCompare
 
         #CLI
         from app.cli import insert_categories
